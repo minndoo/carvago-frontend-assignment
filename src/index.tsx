@@ -7,6 +7,7 @@ import GlobalStyles from './GlobalStyles';
 import WebVitals from './WebVitals';
 import './i18n/i18n';
 import theme from './theme';
+import './api/client';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

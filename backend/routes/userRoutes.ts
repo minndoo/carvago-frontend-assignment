@@ -11,6 +11,7 @@ import {hashPassword} from '../utils/hashPassword';
 import {comparePassword} from '../utils/comparePassword';
 import {authenticateToken} from '../utils/verifyAccessToken';
 import {getAccessTokenDataFromRequest} from '../utils/getAccessTokenDataFromRequest';
+import { setRefreshTokenCookie } from '../utils/setRefreshTokenCookie';
 
 const userRoutes = express.Router();
 
@@ -34,6 +35,9 @@ userRoutes.post('/api/register', (req: Request, res: Response) => {
     const accessToken = signAccessToken(newUser.id, username);
     const refreshToken = signRefreshToken(newUser.id, username);
 
+    setRefreshTokenCookie(res, refreshToken);
+
+    // TODO: remove refreshToken from response
     res.status(201).json({accessToken, refreshToken});
   });
 });
@@ -53,12 +57,15 @@ userRoutes.post('/api/login', (req: Request, res: Response) => {
     const accessToken = signAccessToken(user.id, username);
     const refreshToken = signRefreshToken(user.id, username);
 
+    setRefreshTokenCookie(res, refreshToken);
+
+    // TODO: remove refreshToken from response
     res.status(200).json({accessToken, refreshToken});
   });
 });
 
 userRoutes.post('/api/refresh-token', (req: Request, res: Response) => {
-  const refreshToken = req.body.refreshToken;
+  const refreshToken = req.cookies.refreshToken;
 
   if (isNilOrEmpty(refreshToken)) {
     return res.status(400).json({error: "Refresh token can't be empty"});
@@ -87,5 +94,7 @@ userRoutes.get('/api/user/me', authenticateToken, (req: Request, res: Response) 
     });
   });
 });
+
+// TODO: Create logout route and add clear cookie mechanism
 
 export default userRoutes;

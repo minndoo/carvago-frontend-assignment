@@ -30,6 +30,10 @@ vscode
 .vscode
 .vscode/*
 
+# IDE - Cursor
+.cursor
+.cursor/*
+
 # misc
 /.sass-cache
 /connect.lock
