@@ -1,15 +1,15 @@
 import { OpenAPI, UsersService } from "../api";
 import { authStore } from "./authStore";
 
-export const registerUser = async (username: string, password: string) => {
+export const loginUser = async (username: string, password: string) => {
     try {
-        const response = await UsersService.registerUser({
-          username,
-          password,
+        const response = await UsersService.loginUser({
+            username,
+            password,
         });
 
         OpenAPI.TOKEN = response.accessToken;
-        const currentUser = await UsersService.getCurrentUser();
+        const currentUser = await UsersService.getCurrentUser()
         authStore.setSession(response.accessToken, currentUser);
     } catch (error) {
         throw(error);

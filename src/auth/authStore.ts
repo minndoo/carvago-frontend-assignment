@@ -7,5 +7,8 @@ export const authStore = {
   getAccessToken: () => accessToken,
   setAccessToken: (token: string) => accessToken = token,
   getUser: () => user,
-  setUser: (user: UserResponse) => user = user,
+  setSession: (token: string, u: UserResponse) => {
+    accessToken = token;
+    user = u;
+  },
 };
