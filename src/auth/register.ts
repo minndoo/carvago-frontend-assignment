@@ -1,17 +1,11 @@
-import { OpenAPI, UsersService } from "../api";
+
+import { fetchClient } from "../api/fetchClient";
 import { authStore } from "./authStore";
 
 export const registerUser = async (username: string, password: string) => {
-    try {
-        const response = await UsersService.registerUser({
-          username,
-          password,
-        });
+    const response = await fetchClient.POST('/api/register' , {body: {username, password}} );
 
-        OpenAPI.TOKEN = response.accessToken;
-        const currentUser = await UsersService.getCurrentUser();
-        authStore.setSession(response.accessToken, currentUser);
-    } catch (error) {
-        throw(error);
-    }
+    if(response.data) authStore.setAccessToken(response.data.accessToken);
+
+    return response;
 };

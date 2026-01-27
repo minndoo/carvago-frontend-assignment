@@ -6,8 +6,7 @@ import GlobalStyles from './GlobalStyles';
 import WebVitals from './WebVitals';
 import './i18n/i18n';
 import theme from './theme';
-import { RouterProvider, createRouter } from '@tanstack/react-router'
-import './api/client';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 import './auth/authStore';
 
 // Import the generated route tree

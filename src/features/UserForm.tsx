@@ -1,15 +1,14 @@
 import {FormEvent, useState} from 'react';
 import {Button, Input, VStack, Text, Card, Field} from '@chakra-ui/react';
-import { ApiError } from '../api';
 
-type UserFormProps = {
-    onSubmit: (u: string, p: string) => Promise<void>;
+type UserFormProps<T> = {
+    onSubmit: (u: string, p: string) => Promise<T>;
     title: string;
     subtitle: string;
     submitLabel: string;
 }
 
-export const UserForm = ({onSubmit, title, subtitle, submitLabel}: UserFormProps) => {
+export const UserForm = <T,>({onSubmit, title, subtitle, submitLabel}: UserFormProps<T>) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -21,14 +20,12 @@ export const UserForm = ({onSubmit, title, subtitle, submitLabel}: UserFormProps
     setIsSubmitting(true);
 
 
-    try {
-      await onSubmit(username, password);
-    } catch (error) {
-      if(error instanceof ApiError) {
-        if(error.body.error) {
-          setError(error.body.error)
-        }
-      }
+    const response = await onSubmit(username, password);
+
+    // @ts-expect-error
+    if(response.error) {
+      // @ts-expect-error
+      setError(response.error.error);
     }
 
     setIsSubmitting(false);

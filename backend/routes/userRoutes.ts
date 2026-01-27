@@ -65,7 +65,7 @@ userRoutes.post('/api/login', (req: Request, res: Response) => {
 });
 
 userRoutes.post('/api/refresh-token', (req: Request, res: Response) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.cookies?.refreshToken;
 
   if (isNilOrEmpty(refreshToken)) {
     return res.status(400).json({error: "Refresh token can't be empty"});
