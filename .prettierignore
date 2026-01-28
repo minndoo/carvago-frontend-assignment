@@ -24,6 +24,8 @@ idea
 *.launch
 .settings/
 *.sublime-workspace
+.cursor
+.cursor/*
 
 # IDE - VSCode
 vscode

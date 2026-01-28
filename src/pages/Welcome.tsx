@@ -1,6 +1,6 @@
 import {Center, Link, Text, VStack} from '@chakra-ui/react';
 import {useTranslation} from 'react-i18next';
-import { AppLink } from '../components/AppLink';
+import {AppLink} from '../components/AppLink';
 
 const API_DOCS_HREF = 'http://localhost:3001/api/docs';
 
@@ -16,12 +16,8 @@ export function Welcome() {
         <Link color="blue.400" href={API_DOCS_HREF} target="_blank">
           {t('welcome.link')}
         </Link>
-        <AppLink to='/login'>
-          Login
-        </AppLink>
-        <AppLink to='/register'>
-          Register
-        </AppLink>
+        <AppLink to="/login">Login</AppLink>
+        <AppLink to="/register">Register</AppLink>
       </VStack>
     </Center>
   );

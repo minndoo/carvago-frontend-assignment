@@ -11,7 +11,7 @@ import {hashPassword} from '../utils/hashPassword';
 import {comparePassword} from '../utils/comparePassword';
 import {authenticateToken} from '../utils/verifyAccessToken';
 import {getAccessTokenDataFromRequest} from '../utils/getAccessTokenDataFromRequest';
-import { setRefreshTokenCookie } from '../utils/setRefreshTokenCookie';
+import {setRefreshTokenCookie} from '../utils/setRefreshTokenCookie';
 
 const userRoutes = express.Router();
 
@@ -46,6 +46,7 @@ userRoutes.post('/api/login', (req: Request, res: Response) => {
   const {password, username} = validateCredentialsFromBody(req, res);
 
   userDB.findOne({username}, (err: Error | null, user: User | null) => {
+    console.log('err', err);
     if (isNotNil(err)) return res.status(500).json({error: 'Internal server error'});
     if (isNil(user)) return res.status(401).json({error: 'User was not found'});
 
@@ -65,7 +66,7 @@ userRoutes.post('/api/login', (req: Request, res: Response) => {
 });
 
 userRoutes.post('/api/refresh-token', (req: Request, res: Response) => {
-  const refreshToken = req.cookies?.refreshToken;
+  const refreshToken = req.cookies.refreshToken;
 
   if (isNilOrEmpty(refreshToken)) {
     return res.status(400).json({error: "Refresh token can't be empty"});

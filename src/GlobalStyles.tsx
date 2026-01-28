@@ -8,7 +8,7 @@
  * resets or base stylesheets can be applied.
  *
  * @see https://styled-components.com/docs/api
-*/
+ */
 import {createGlobalStyle} from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`

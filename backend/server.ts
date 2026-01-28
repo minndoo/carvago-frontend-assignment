@@ -1,4 +1,5 @@
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import config from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
@@ -14,7 +15,13 @@ const app = express();
 const port = 3001;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
+app.use(cookieParser());
 
 app.use(todoRoutes);
 app.use(userRoutes);

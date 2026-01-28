@@ -1,10 +1,9 @@
 import {createFileRoute} from '@tanstack/react-router';
-import {Register} from '../pages/Register';
 
-export const Route = createFileRoute('/register')({
+export const Route = createFileRoute('/_auth/todos/')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  return <Register />;
+  return <div>Hello "/_auth/todos/"!</div>;
 }
