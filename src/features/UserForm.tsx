@@ -1,7 +1,6 @@
 import {FormEvent, useState} from 'react';
 import {Button, Input, VStack, Text, Card, Field} from '@chakra-ui/react';
 import {useRouter} from '@tanstack/react-router';
-import {authStore} from '../auth/authStore';
 
 type UserFormProps<T> = {
   onSubmit: (u: string, p: string) => Promise<T>;
@@ -32,9 +31,7 @@ export const UserForm = <T,>({onSubmit, title, subtitle, submitLabel}: UserFormP
     }
 
     setIsSubmitting(false);
-    console.log('should redirect', authStore.getAccessToken());
     router.navigate({to: '/todos'});
-    console.log('redirected');
   };
 
   return (

@@ -11,15 +11,27 @@ const middleware: Middleware = {
   async onRequest({request}) {
     const accessToken = authStore.getAccessToken();
 
-    if (accessToken) request.headers.set('Authorization', accessToken);
+    if (accessToken) request.headers.set('Authorization', `Bearer ${accessToken}`);
 
     return request;
   },
-  async onResponse({response}) {
-    if (response.status === 401)
+  async onResponse({response, request}) {
+    const requestUrl = new URL(request.url);
+
+    if (response.status === 401 && !requestUrl.pathname.endsWith('/api/refresh-token')) {
       await fetchClient.POST('/api/refresh-token', {
         body: {refreshToken: ''},
       });
+    }
+
+    if (response.ok) {
+      const contentType = response.headers.get('content-type') ?? '';
+      const isJson = contentType.includes('application/json');
+
+      if (!isJson) {
+        return Response.json(null, {status: response.status});
+      }
+    }
 
     return response;
   },

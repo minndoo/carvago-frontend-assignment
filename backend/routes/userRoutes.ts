@@ -46,7 +46,6 @@ userRoutes.post('/api/login', (req: Request, res: Response) => {
   const {password, username} = validateCredentialsFromBody(req, res);
 
   userDB.findOne({username}, (err: Error | null, user: User | null) => {
-    console.log('err', err);
     if (isNotNil(err)) return res.status(500).json({error: 'Internal server error'});
     if (isNil(user)) return res.status(401).json({error: 'User was not found'});
 

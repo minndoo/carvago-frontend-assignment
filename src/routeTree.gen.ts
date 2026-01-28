@@ -15,6 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthTodosIndexRouteImport } from './routes/_auth/todos/index'
+import { Route as AuthTodosCreateRouteImport } from './routes/_auth/todos/create'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -45,12 +46,18 @@ const AuthTodosIndexRoute = AuthTodosIndexRouteImport.update({
   path: '/todos/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const AuthTodosCreateRoute = AuthTodosCreateRouteImport.update({
+  id: '/todos/create',
+  path: '/todos/create',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/todos/create': typeof AuthTodosCreateRoute
   '/todos/': typeof AuthTodosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -58,6 +65,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/todos/create': typeof AuthTodosCreateRoute
   '/todos': typeof AuthTodosIndexRoute
 }
 export interface FileRoutesById {
@@ -67,13 +75,20 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/_auth/todos/create': typeof AuthTodosCreateRoute
   '/_auth/todos/': typeof AuthTodosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/login' | '/register' | '/todos/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/login'
+    | '/register'
+    | '/todos/create'
+    | '/todos/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/login' | '/register' | '/todos'
+  to: '/' | '/about' | '/login' | '/register' | '/todos/create' | '/todos'
   id:
     | '__root__'
     | '/'
@@ -81,6 +96,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/login'
     | '/register'
+    | '/_auth/todos/create'
     | '/_auth/todos/'
   fileRoutesById: FileRoutesById
 }
@@ -136,14 +152,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthTodosIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_auth/todos/create': {
+      id: '/_auth/todos/create'
+      path: '/todos/create'
+      fullPath: '/todos/create'
+      preLoaderRoute: typeof AuthTodosCreateRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
   }
 }
 
 interface AuthRouteRouteChildren {
+  AuthTodosCreateRoute: typeof AuthTodosCreateRoute
   AuthTodosIndexRoute: typeof AuthTodosIndexRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthTodosCreateRoute: AuthTodosCreateRoute,
   AuthTodosIndexRoute: AuthTodosIndexRoute,
 }
 

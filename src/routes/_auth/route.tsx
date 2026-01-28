@@ -7,7 +7,6 @@ export const Route = createFileRoute('/_auth')({
   component: RouteComponent,
   beforeLoad: async () => {
     const accessToken = authStore.getAccessToken();
-    console.log('accessToken', accessToken);
     if (!accessToken) {
       const response = await fetchClient.POST('/api/refresh-token', {
         body: {
