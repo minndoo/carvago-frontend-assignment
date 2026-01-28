@@ -7,18 +7,20 @@ export const TodosCreateForm = () => {
   const [taskName, setTaskName] = useState('');
   const [description, setDescription] = useState('');
   const router = useRouter();
-  const {mutate} = useCreateTodo();
+  const {mutateAsync, } = useCreateTodo();
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!taskName.trim()) return;
 
-    mutate({
+    const response = await mutateAsync({
       body: {
         title: taskName,
         description,
       },
     });
+
+    if(response) router.navigate({to: '/todos'});
   };
 
   return (

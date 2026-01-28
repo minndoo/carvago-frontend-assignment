@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link as ChakraLink, type LinkProps as ChakraLinkProps} from '@chakra-ui/react';
-import {Link as RouterLink, type LinkProps as RouterLinkProps} from '@tanstack/react-router';
+import {createLink, LinkComponent} from '@tanstack/react-router';
 
-type AppLinkProps = ChakraLinkProps & RouterLinkProps;
+const BasicLinkComponent = React.forwardRef<HTMLAnchorElement, ChakraLinkProps>(
+  (props, ref) => <ChakraLink ref={ref} {...props} />
+)
 
-export const AppLink = React.forwardRef<HTMLAnchorElement, AppLinkProps>((props, ref) => (
-  <ChakraLink as={RouterLink} ref={ref} {...props} />
-));
+const CreatedLink = createLink(BasicLinkComponent);
+
+export const AppLink: LinkComponent<typeof CreatedLink> = (props) => <CreatedLink preload='intent' {...props} />

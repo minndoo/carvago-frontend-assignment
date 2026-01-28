@@ -1,3 +1,4 @@
+import { Checkbox } from '../../../../components/Checkbox';
 import {useCompleteTodo} from './hooks/useCompleteTodo';
 import {useIncompleteTodo} from './hooks/useIncompleteTodo';
 
@@ -18,10 +19,12 @@ export const TodoItem = ({itemId, title, completed = false}: TodoItemProps) => {
 
   return (
     <li>
-      <label htmlFor={itemId}>
-        <input id={itemId} type="checkbox" onClick={handleOnClick} checked={completed} />
-        {title}
-      </label>
+      <Checkbox 
+        label={title}
+        id={itemId}
+        onClick={handleOnClick}
+        checked={completed}
+      />
     </li>
   );
 };
